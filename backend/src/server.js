@@ -2,7 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const errorHandler = require('./middleware/errorHandler');
-const { supabase } = require('./services/supabaseClient');
+const { supabase } = require('./config/supabaseClient');
+const resumeRoutes = require('./routes/resumeRoutes');
+const skillRoutes = require('./routes/skillRoutes');
 
 // Load environment variables
 dotenv.config();
@@ -39,7 +41,11 @@ app.get('/', (req, res) => {
   });
 });
 
-// Global error handling middleware
+// API Feature Routes
+app.use('/api/resumes', resumeRoutes);
+app.use('/api/skills', skillRoutes);
+
+// Global centralized error handling middleware (must be registered after routes)
 app.use(errorHandler);
 
 // Start server
