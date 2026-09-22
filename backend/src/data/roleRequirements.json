@@ -1,0 +1,60 @@
+{
+  "roles": [
+    {
+      "id": "full-stack-developer",
+      "title": "Full Stack Developer",
+      "category": "Software Engineering",
+      "coreSkills": [
+        "JavaScript",
+        "React",
+        "Node.js",
+        "Express",
+        "SQL",
+        "Git"
+      ],
+      "secondarySkills": [
+        "TypeScript",
+        "Docker",
+        "Tailwind CSS",
+        "REST APIs",
+        "PostgreSQL"
+      ]
+    },
+    {
+      "id": "frontend-developer",
+      "title": "Frontend Developer",
+      "category": "Software Engineering",
+      "coreSkills": [
+        "JavaScript",
+        "React",
+        "HTML5",
+        "CSS3",
+        "Tailwind CSS"
+      ],
+      "secondarySkills": [
+        "TypeScript",
+        "Next.js",
+        "Redux",
+        "UI/UX Design"
+      ]
+    },
+    {
+      "id": "backend-developer",
+      "title": "Backend Developer",
+      "category": "Software Engineering",
+      "coreSkills": [
+        "Node.js",
+        "Express",
+        "SQL",
+        "PostgreSQL",
+        "REST APIs"
+      ],
+      "secondarySkills": [
+        "Docker",
+        "Redis",
+        "Authentication",
+        "System Design"
+      ]
+    }
+  ]
+}
