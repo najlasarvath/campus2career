@@ -1,65 +1,162 @@
-import { useState } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import PortalPlaceholderPage from './pages/PortalPlaceholderPage';
+import StudentLayout from './layouts/StudentLayout';
+import StudentDashboardPage from './pages/student/StudentDashboardPage';
+import RoleMatchPage from './pages/student/RoleMatchPage';
+import LearnPage from './pages/student/LearnPage';
+import AssistantPage from './pages/student/AssistantPage';
+import MockInterviewPage from './pages/student/MockInterviewPage';
+import ProgressPage from './pages/student/ProgressPage';
+import CertificatePage from './pages/student/CertificatePage';
+import CollegeLayout from './layouts/CollegeLayout';
+import CollegeDashboardPage from './pages/college/CollegeDashboardPage';
+import CollegeStudentsPage from './pages/college/CollegeStudentsPage';
+import CollegeSkillsPage from './pages/college/CollegeSkillsPage';
+import CollegeCertificatesPage from './pages/college/CollegeCertificatesPage';
+import CollegeAlertsPage from './pages/college/CollegeAlertsPage';
+import CompanyLayout from './layouts/CompanyLayout';
+import CompanyDashboardPage from './pages/company/CompanyDashboardPage';
+import CompanyRequirementsPage from './pages/company/CompanyRequirementsPage';
+import CompanyNotificationsPage from './pages/company/CompanyNotificationsPage';
 
 function App() {
-  const [targetRole, setTargetRole] = useState('Full Stack Developer');
-
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col justify-between">
-      {/* Header */}
-      <header className="border-b border-slate-800 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/30">
-            C2C
-          </div>
-          <span className="font-semibold text-lg tracking-tight">Campus2Career</span>
-        </div>
-        <div className="flex items-center space-x-4 text-sm">
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-950/80 text-emerald-400 border border-emerald-800/60">
-            Scaffold Ready
-          </span>
-        </div>
-      </header>
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<Navigate to="/register/student" replace />} />
+      <Route path="/register/student" element={<RegisterPage role="student" />} />
+      <Route path="/register/college" element={<RegisterPage role="college" />} />
+      <Route path="/register/company" element={<RegisterPage role="company" />} />
 
-      {/* Hero Section */}
-      <main className="max-w-4xl mx-auto px-6 py-16 text-center">
-        <div className="inline-block mb-4 px-3 py-1 rounded-full text-xs font-medium bg-indigo-950 text-indigo-300 border border-indigo-800">
-          Vite + React + Tailwind CSS
-        </div>
-        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white mb-6">
-          Bridge the Gap from <span className="text-indigo-400">Campus</span> to <span className="text-emerald-400">Career</span>
-        </h1>
-        <p className="text-slate-400 text-lg max-w-2xl mx-auto mb-10">
-          Personalized AI-powered roadmap generation, resume skill extraction, and real-time campus skill heatmaps.
-        </p>
+      <Route
+        path="/student"
+        element={
+          <StudentLayout>
+            <StudentDashboardPage />
+          </StudentLayout>
+        }
+      />
+      <Route
+        path="/student/role-match"
+        element={
+          <StudentLayout>
+            <RoleMatchPage />
+          </StudentLayout>
+        }
+      />
+      <Route
+        path="/student/learn"
+        element={
+          <StudentLayout>
+            <LearnPage />
+          </StudentLayout>
+        }
+      />
+      <Route
+        path="/student/assistant"
+        element={
+          <StudentLayout>
+            <AssistantPage />
+          </StudentLayout>
+        }
+      />
+      <Route
+        path="/student/mock-interview"
+        element={
+          <StudentLayout>
+            <MockInterviewPage />
+          </StudentLayout>
+        }
+      />
+      <Route
+        path="/student/progress"
+        element={
+          <StudentLayout>
+            <ProgressPage />
+          </StudentLayout>
+        }
+      />
+      <Route
+        path="/student/certificate"
+        element={
+          <StudentLayout>
+            <CertificatePage />
+          </StudentLayout>
+        }
+      />
 
-        {/* Status Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-          <div className="bg-slate-800/60 border border-slate-700/60 rounded-xl p-6 shadow-sm">
-            <h3 className="text-sm font-semibold text-slate-300 mb-2">Frontend Architecture</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              React + Vite configured with Tailwind CSS utility styling and clean modular folders.
-            </p>
-          </div>
-          <div className="bg-slate-800/60 border border-slate-700/60 rounded-xl p-6 shadow-sm">
-            <h3 className="text-sm font-semibold text-slate-300 mb-2">Backend Architecture</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Node.js + Express API with Supabase integration, Gemini AI SDK, and pdf-parse.
-            </p>
-          </div>
-          <div className="bg-slate-800/60 border border-slate-700/60 rounded-xl p-6 shadow-sm">
-            <h3 className="text-sm font-semibold text-slate-300 mb-2">Contract Spec</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              API endpoints for auth, resume upload, extraction, roadmap, and heatmap defined in API_SPEC.md.
-            </p>
-          </div>
-        </div>
-      </main>
+      <Route
+        path="/college"
+        element={
+          <CollegeLayout>
+            <CollegeDashboardPage />
+          </CollegeLayout>
+        }
+      />
+      <Route
+        path="/college/students"
+        element={
+          <CollegeLayout>
+            <CollegeStudentsPage />
+          </CollegeLayout>
+        }
+      />
+      <Route
+        path="/college/skills"
+        element={
+          <CollegeLayout>
+            <CollegeSkillsPage />
+          </CollegeLayout>
+        }
+      />
+      <Route
+        path="/college/certificates"
+        element={
+          <CollegeLayout>
+            <CollegeCertificatesPage />
+          </CollegeLayout>
+        }
+      />
+      <Route
+        path="/college/alerts"
+        element={
+          <CollegeLayout>
+            <CollegeAlertsPage />
+          </CollegeLayout>
+        }
+      />
 
-      {/* Footer */}
-      <footer className="border-t border-slate-800 px-6 py-4 text-center text-xs text-slate-500">
-        Campus2Career Hackathon Project — Built strictly to rules.md spec
-      </footer>
-    </div>
+      <Route
+        path="/company"
+        element={
+          <CompanyLayout>
+            <CompanyDashboardPage />
+          </CompanyLayout>
+        }
+      />
+      <Route
+        path="/company/requirements"
+        element={
+          <CompanyLayout>
+            <CompanyRequirementsPage />
+          </CompanyLayout>
+        }
+      />
+      <Route
+        path="/company/notifications"
+        element={
+          <CompanyLayout>
+            <CompanyNotificationsPage />
+          </CompanyLayout>
+        }
+      />
+
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
 
