@@ -39,6 +39,10 @@ app.get('/', (req, res) => {
   });
 });
 
+// Mount AI feature routes
+const aiRoutes = require('./routes/ai.routes');
+app.use('/api', aiRoutes);
+
 // Global error handling middleware
 app.use(errorHandler);
 
