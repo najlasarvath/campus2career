@@ -29,11 +29,12 @@ function cleanJSON(text) {
  * Calls Gemini / GoogleGenAI models with native JSON mode.
  * Automatically handles temporary 503 high-demand or 429 quota spikes by cascading across models.
  *
- * @param {string} prompt - Prompt text requesting structured JSON output
+ * @param {string} prompt - Prompt text requesting output
  * @param {string} [modelName] - Optional override model name
- * @returns {Promise<string>} - Raw text JSON from model
+ * @param {Object} [options] - Options such as responseMimeType ('application/json' | 'text/plain')
+ * @returns {Promise<string>} - Raw text from model
  */
-async function callGemini(prompt, modelName) {
+async function callGemini(prompt, modelName, options = {}) {
   const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
@@ -42,49 +43,26 @@ async function callGemini(prompt, modelName) {
 
   const ai = new GoogleGenAI({ apiKey });
   
-  // Model cascade: configured override -> process.env.GEMINI_MODEL -> gemini-3.5-flash -> gemma-4-26b-a4b-it -> gemini-3.1-flash-lite
-  const candidates = [
-    modelName,
-    process.env.GEMINI_MODEL,
-    'gemini-3.5-flash',
-    'gemma-4-26b-a4b-it',
-    'gemini-3.1-flash-lite',
-    'gemini-flash-latest'
-  ].filter(Boolean);
+  const targetModel = modelName || process.env.GEMINI_MODEL || 'gemini-3.5-flash-lite';
+  const mimeType = options?.responseMimeType || 'application/json';
 
-  const modelsToTry = [...new Set(candidates)];
-  let lastErr = null;
-
-  for (const model of modelsToTry) {
-    try {
-      const response = await ai.models.generateContent({
-        model,
-        contents: prompt,
-        config: {
-          responseMimeType: 'application/json'
-        }
-      });
-      return response.text || '';
-    } catch (err) {
-      lastErr = err;
-      const isTransient = err.status === 429 || err.status === 503 || err.status === 404 ||
-        (err.message && (
-          err.message.includes('503') ||
-          err.message.includes('429') ||
-          err.message.includes('404') ||
-          err.message.includes('demand') ||
-          err.message.includes('quota') ||
-          err.message.includes('RESOURCE_EXHAUSTED')
-        ));
-      if (isTransient) {
-        // Try next candidate model in cascade
-        continue;
+  try {
+    const response = await ai.models.generateContent({
+      model: targetModel,
+      contents: prompt,
+      config: {
+        responseMimeType: mimeType
       }
-      throw err;
-    }
+    });
+    return response.text || '';
+  } catch (err) {
+    // Sanitize any key leakage in error
+    const sanitizedMsg = (err.message || '').replace(apiKey, '[REDACTED_API_KEY]');
+    const sanitizedErr = new Error(sanitizedMsg);
+    sanitizedErr.status = err.status || err.code;
+    sanitizedErr.model = targetModel;
+    throw sanitizedErr;
   }
-
-  throw lastErr || new Error('All model candidates failed to respond');
 }
 
 /**

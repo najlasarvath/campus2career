@@ -1,3 +1,98 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+:root {
+  --c2c-bg: #F8F7F4;
+  --c2c-surface: #FFFFFF;
+  --c2c-surface-warm: #FAF9F6;
+  --c2c-border: #E5E7EB;
+  --c2c-border-subtle: #ECEAE3;
+  --c2c-navy: #111E38;
+  --c2c-blue: #173B8F;
+  --c2c-blue-light: #2563EB;
+  --c2c-gold: #B89047;
+  --c2c-gold-light: #DFCA95;
+  --c2c-gold-subtle: #FDF9F0;
+  --c2c-emerald: #0D7A5F;
+  --c2c-text-primary: #0F172A;
+  --c2c-text-secondary: #475569;
+  --c2c-text-muted: #94A3B8;
+}
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: #0F172A;
+    background-color: #F8F7F4;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Custom sleek subtle light scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1EFEA;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Executive Luxury Enterprise Card & Surface Utilities */
+.pro-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 0.875rem; /* 14px */
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.03), 0 1px 2px -1px rgba(15, 23, 42, 0.02);
+}
+
+.pro-card-interactive {
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 0.875rem;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.03), 0 1px 2px -1px rgba(15, 23, 42, 0.02);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pro-card-interactive:hover {
+  border-color: #CBD5E1;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+  transform: translateY(-2px);
+}
+
+.executive-badge-gold {
+  background-color: #FEF9EE;
+  color: #8C6615;
+  border: 1px solid #F0DFB0;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+}
+
+.executive-badge-navy {
+  background-color: #F0F4FC;
+  color: #173B8F;
+  border: 1px solid #D0DCF5;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+}
+
+.executive-badge-emerald {
+  background-color: #ECFDF5;
+  color: #065F46;
+  border: 1px solid #A7F3D0;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+}
+
+

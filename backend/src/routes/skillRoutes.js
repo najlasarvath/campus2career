@@ -1,7 +1,13 @@
 const express = require('express');
-const { extractSkillsHandler, calculateMatchHandler } = require('../controllers/skillController');
+const { extractSkillsHandler, calculateMatchHandler, getAvailableRolesHandler } = require('../controllers/skillController');
 
 const router = express.Router();
+
+/**
+ * @route   GET /api/skills/roles
+ * @desc    Retrieve available target roles and associated company requirements
+ */
+router.get('/roles', getAvailableRolesHandler);
 
 /**
  * @route   POST /api/skills/extract

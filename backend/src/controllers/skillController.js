@@ -130,7 +130,34 @@ async function calculateMatchHandler(req, res, next) {
   }
 }
 
+/**
+ * Controller: Retrieve available target roles and associated companies from Supabase.
+ * GET /api/skills/roles
+ */
+async function getAvailableRolesHandler(req, res, next) {
+  try {
+    const { data, error } = await supabase
+      .from('role_requirements')
+      .select('id, role_id, title, category, core_skills, secondary_skills, companies(id, name, industry)');
+
+    if (error) {
+      console.warn('[SkillController] Error querying role_requirements from DB:', error.message);
+      const fallback = require('../data/roleRequirements.json').roles;
+      return res.status(200).json({ success: true, roles: fallback });
+    }
+
+    return res.status(200).json({
+      success: true,
+      roles: data || []
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   extractSkillsHandler,
-  calculateMatchHandler
+  calculateMatchHandler,
+  getAvailableRolesHandler
 };
+

@@ -6,6 +6,13 @@ const { supabase } = require('./config/supabaseClient');
 const resumeRoutes = require('./routes/resumeRoutes');
 const skillRoutes = require('./routes/skillRoutes');
 const aiRoutes = require('./routes/ai.routes');
+const authRoutes = require('./routes/authRoutes');
+const studentRoutes = require('./routes/studentRoutes');
+const analyticsRoutes = require('./routes/analyticsRoutes');
+const taskRoutes = require('./routes/taskRoutes');
+const workshopRoutes = require('./routes/workshopRoutes');
+const certificateRoutes = require('./routes/certificateRoutes');
+const companyRoutes = require('./routes/companyRoutes');
 
 // Load environment variables
 dotenv.config();
@@ -46,8 +53,15 @@ app.get('/', (req, res) => {
 app.use('/api', aiRoutes);
 
 // API Feature Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/students', studentRoutes);
 app.use('/api/resumes', resumeRoutes);
 app.use('/api/skills', skillRoutes);
+app.use('/api/analytics', analyticsRoutes);
+app.use('/api/tasks', taskRoutes);
+app.use('/api/workshops', workshopRoutes);
+app.use('/api/certificates', certificateRoutes);
+app.use('/api/companies', companyRoutes);
 
 // Global centralized error handling middleware (must be registered after routes)
 app.use(errorHandler);

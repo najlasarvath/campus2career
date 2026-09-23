@@ -130,6 +130,28 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- ----------------------------------------------------------------------------
+-- 6. Workshops Table
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS workshops (
+    id TEXT PRIMARY KEY,
+    title TEXT NOT NULL,
+    skill TEXT NOT NULL,
+    description TEXT,
+    instructor TEXT,
+    conducted_at TIMESTAMPTZ,
+    duration TEXT,
+    video_url TEXT,
+    embed_url TEXT,
+    thumbnail_url TEXT,
+    status TEXT NOT NULL DEFAULT 'conducted', -- 'conducted', 'active', 'scheduled'
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_workshops_skill ON workshops(skill);
+CREATE INDEX IF NOT EXISTS idx_workshops_status ON workshops(status);
+
 DROP TRIGGER IF EXISTS trigger_update_college_student_count ON students;
 CREATE TRIGGER trigger_update_college_student_count
 AFTER INSERT OR UPDATE OR DELETE ON students

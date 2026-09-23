@@ -39,7 +39,7 @@ async function uploadResume(req, res, next) {
           extracted_skills: extractedSkills,
           updated_at: new Date().toISOString()
         })
-        .eq('id', studentId)
+        .or(`id.eq.${studentId},auth_user_id.eq.${studentId}`)
         .select('id')
         .maybeSingle();
 
@@ -81,7 +81,8 @@ async function uploadResume(req, res, next) {
       resumeId: responseId,
       textLength: extractedText.length,
       extractedText: extractedText.length > 500 ? `${extractedText.slice(0, 500)}...` : extractedText,
-      extractedSkills
+      extractedSkills,
+      skills: extractedSkills
     });
   } catch (error) {
     next(error);
