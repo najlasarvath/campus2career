@@ -231,50 +231,61 @@ export const INITIAL_COLLEGE_DATA = {
       id: "C2C-POWERBI-74A82F",
       studentName: "Alex Chen",
       studentId: "STU-8821",
+      collegeName: "Apex Institute of Technology",
+      college_name: "Apex Institute of Technology",
       program: "Power BI Industry Readiness Workshop",
+      workshopTitle: "Power BI Industry Readiness Workshop",
       skill: "Power BI",
       issuedDate: "12 Sep 2026",
       status: "Issued",
       verified: true,
-      score: "88% (Distinction)",
-      hash: "0x4f8b92c1a83e...77d1"
+      assessmentScore: 88,
+      score: "88%"
     },
     {
       id: "C2C-SQL-3541523C",
       studentName: "Sarah Khan",
       studentId: "STU-8845",
+      collegeName: "Apex Institute of Technology",
+      college_name: "Apex Institute of Technology",
       program: "SQL Industry Readiness Workshop",
+      workshopTitle: "SQL Industry Readiness Workshop",
       skill: "SQL",
       issuedDate: "18 Sep 2026",
       status: "Issued",
       verified: true,
-      score: "92% (Honors)",
-      hash: "0x9a2e31b4d08f...21c4"
+      assessmentScore: 92,
+      score: "92%"
     },
     {
       id: "C2C-DOCKER-9B214D",
       studentName: "David Kim",
       studentId: "STU-8790",
+      collegeName: "Apex Institute of Technology",
+      college_name: "Apex Institute of Technology",
       program: "Docker Industry Readiness Workshop",
+      workshopTitle: "Docker Industry Readiness Workshop",
       skill: "Docker",
       issuedDate: "5 Sep 2026",
       status: "Issued",
       verified: true,
-      score: "85% (Proficient)",
-      hash: "0x1b7c84e2f90a...63a2"
+      assessmentScore: 85,
+      score: "85%"
     },
     {
       id: "C2C-DATAVIZ-44A712",
       studentName: "Priya Sharma",
       studentId: "STU-8902",
+      collegeName: "Apex Institute of Technology",
+      college_name: "Apex Institute of Technology",
       program: "Executive Data Storytelling & Presentation",
+      workshopTitle: "Executive Data Storytelling & Presentation",
       skill: "Data Visualization",
       issuedDate: "28 Aug 2026",
       status: "Issued",
       verified: true,
-      score: "94% (Honors)",
-      hash: "0x78ab54dc12e9...44a7"
+      assessmentScore: 94,
+      score: "94%"
     }
   ]
 };
-

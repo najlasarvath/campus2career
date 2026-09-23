@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import collegeService from '../../services/collegeService';
+import CertificateModal from '../../components/certificate/CertificateModal';
 
 export default function CollegeCertificatesPage() {
   const { role } = useAuth();
@@ -116,14 +117,14 @@ export default function CollegeCertificatesPage() {
                     <td className="py-3 px-4 font-mono font-bold text-slate-900">{c.id}</td>
                     <td className="py-3 px-4">
                       <div className="font-bold text-slate-900">{c.studentName}</div>
-                      <div className="text-[11px] text-slate-400 font-mono">{c.studentId}</div>
+                      <div className="text-[11px] text-slate-500">{c.collegeName || c.college_name || 'Apex Institute of Technology'}</div>
                     </td>
                     <td className="py-3 px-4">
-                      <div className="font-semibold text-slate-800">{c.program}</div>
+                      <div className="font-semibold text-slate-800">{c.workshopTitle || c.program}</div>
                       <div className="text-[11px] text-blue-600 font-medium">{c.skill}</div>
                     </td>
                     <td className="py-3 px-4 font-bold text-emerald-700 font-mono">
-                      {c.score}
+                      {c.assessmentScore !== undefined ? `${c.assessmentScore}%` : (c.score || '85%')}
                     </td>
                     <td className="py-3 px-4 text-slate-500">{c.issuedDate}</td>
                     <td className="py-3 px-4">
@@ -135,7 +136,7 @@ export default function CollegeCertificatesPage() {
                     <td className="py-3 px-4 text-right space-x-2">
                       <button
                         onClick={() => setSelectedCert(c)}
-                        className="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white border border-blue-200 transition"
+                        className="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white border border-blue-200 transition cursor-pointer"
                       >
                         Inspect & Verify
                       </button>
@@ -154,63 +155,13 @@ export default function CollegeCertificatesPage() {
         </div>
       </div>
 
-      {/* Certificate Modal Drawer */}
+      {/* Formal College Certificate Modal */}
       {selectedCert && (
-        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 max-w-lg w-full shadow-2xl space-y-5 animate-in zoom-in-95 duration-150">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full">
-                ✓ Cryptographically Verified Credential
-              </span>
-              <button
-                onClick={() => setSelectedCert(null)}
-                className="text-slate-400 hover:text-slate-700 p-1 rounded-lg hover:bg-slate-100 transition"
-              >
-                ✕
-              </button>
-            </div>
-
-            {/* Certificate Visual Mock */}
-            <div className="bg-slate-50 border-2 border-dashed border-slate-200 rounded-xl p-6 text-center space-y-3">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 block">
-                Campus2Career Placement Credential
-              </span>
-              <h3 className="text-xl font-bold text-slate-900">{selectedCert.studentName}</h3>
-              <p className="text-xs text-slate-600 max-w-sm mx-auto">
-                Has successfully demonstrated benchmark competency in{' '}
-                <strong className="text-blue-700 font-semibold">{selectedCert.skill}</strong> under the program{' '}
-                <span className="italic">{selectedCert.program}</span>.
-              </p>
-              <div className="pt-2 flex justify-center items-center space-x-4 text-xs font-mono">
-                <span className="text-slate-500">Grade: <strong className="text-emerald-700">{selectedCert.score}</strong></span>
-                <span className="text-slate-300">•</span>
-                <span className="text-slate-500">Issued: <strong>{selectedCert.issuedDate}</strong></span>
-              </div>
-              <div className="pt-2 text-[10px] font-mono text-slate-400 bg-white py-1 px-3 rounded border border-slate-200 inline-block">
-                Hash: {selectedCert.hash}
-              </div>
-            </div>
-
-            {/* Modal Actions */}
-            <div className="flex items-center justify-between pt-2">
-              <span className="text-xs font-mono text-slate-400">{selectedCert.id}</span>
-              <div className="flex space-x-2">
-                <button
-                  onClick={() => alert(`Certificate ${selectedCert.id} downloaded as PDF.`)}
-                  className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-sm transition"
-                >
-                  Download PDF
-                </button>
-                <button
-                  onClick={() => setSelectedCert(null)}
-                  className="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <CertificateModal
+          certificate={selectedCert}
+          isOpen={Boolean(selectedCert)}
+          onClose={() => setSelectedCert(null)}
+        />
       )}
     </div>
   );

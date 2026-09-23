@@ -62,6 +62,10 @@ export default function DashboardPage() {
       .catch(() => {});
 
     // 3. Fetch Certificates
+    fetchCertificates();
+  }, []);
+
+  const fetchCertificates = () => {
     apiClient.get('/certificates')
       .then(res => {
         if (res && res.success && Array.isArray(res.certificates)) {
@@ -69,7 +73,7 @@ export default function DashboardPage() {
         }
       })
       .catch(() => {});
-  }, []);
+  };
 
   const handleToggleDailyTask = async (taskId) => {
     try {
@@ -89,7 +93,7 @@ export default function DashboardPage() {
   };
 
   const handleOpenCertificate = (certOrWorkshop) => {
-    if (certOrWorkshop?.issuer) {
+    if (certOrWorkshop?.issuer || certOrWorkshop?.id?.startsWith?.('C2C-')) {
       setSelectedCertificate(certOrWorkshop);
       setSelectedWorkshop(null);
     } else {
@@ -566,6 +570,7 @@ export default function DashboardPage() {
         workshop={selectedWorkshop}
         isOpen={isWorkshopModalOpen}
         onClose={() => setIsWorkshopModalOpen(false)}
+        onSkillVerified={() => { fetchCertificates(); }}
         onOpenCertificate={handleOpenCertificate}
       />
 
@@ -574,7 +579,10 @@ export default function DashboardPage() {
         certificate={selectedCertificate}
         workshop={selectedWorkshop}
         isOpen={isCertificateModalOpen}
-        onClose={() => setIsCertificateModalOpen(false)}
+        onClose={() => {
+          setIsCertificateModalOpen(false);
+          fetchCertificates();
+        }}
       />
     </div>
   );

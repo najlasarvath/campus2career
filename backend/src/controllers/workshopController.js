@@ -556,6 +556,30 @@ async function submitWorkshopAssessment(req, res, next) {
       }
     }
 
+    // Auto-issue certificate on benchmark pass
+    let issuedCertificate = null;
+    if (isPassing) {
+      try {
+        const { issueCertificateForStudent } = require('./certificateController');
+        const certResult = await issueCertificateForStudent({
+          studentId,
+          workshop,
+          score: postScore,
+          user: req.user,
+          collegeName: req.body?.collegeName || req.user?.college || req.user?.user_metadata?.college,
+          studentName: req.body?.studentName || req.user?.name || req.user?.user_metadata?.full_name
+        });
+        issuedCertificate = certResult?.certificate || null;
+        if (issuedCertificate) {
+          enrollment.certificateId = issuedCertificate.id;
+          enrollment.certificateIssued = true;
+          studentEnrollments.set(enrollmentKey, enrollment);
+        }
+      } catch (certErr) {
+        console.warn('[WorkshopController] Certificate auto-issuance notice:', certErr.message);
+      }
+    }
+
     let recommendedTasks = [];
     if (!isPassing) {
       recommendedTasks = [
@@ -579,7 +603,8 @@ async function submitWorkshopAssessment(req, res, next) {
         ? `Skill improvement detected. Verified proficiency in ${workshop.skill} recorded (+${improvement}%).`
         : `${workshop.skill} skill gap remains. Additional targeted daily practice tasks recommended.`,
       recommendedDailyTasks: recommendedTasks,
-      eligibleForCertificate: isPassing
+      eligibleForCertificate: isPassing,
+      certificate: issuedCertificate
     });
   } catch (error) {
     next(error);

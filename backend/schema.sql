@@ -157,3 +157,23 @@ CREATE TRIGGER trigger_update_college_student_count
 AFTER INSERT OR UPDATE OR DELETE ON students
 FOR EACH ROW
 EXECUTE FUNCTION update_college_student_count();
+
+-- ----------------------------------------------------------------------------
+-- 7. Certificates Table
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS certificates (
+    id TEXT PRIMARY KEY,
+    student_id UUID NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+    workshop_id TEXT NOT NULL,
+    workshop_title TEXT NOT NULL,
+    student_name TEXT NOT NULL,
+    college_name TEXT NOT NULL,
+    assessment_score INTEGER NOT NULL,
+    issued_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT uq_student_workshop_certificate UNIQUE (student_id, workshop_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_certificates_student_id ON certificates(student_id);
+CREATE INDEX IF NOT EXISTS idx_certificates_workshop_id ON certificates(workshop_id);
+
