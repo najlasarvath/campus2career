@@ -2,8 +2,6 @@
 
 This document is the authoritative specification for all REST API endpoints, request/response contracts, authentication mechanisms, and security controls in the Campus2Career platform.
 
-> **Note**: This file is maintained in full synchronization with [`API_SEC.md`](file:///c:/Users/user/HS112-Femora/API_SEC.md).
-
 ---
 
 ## 1. Security Architecture & Access Control
